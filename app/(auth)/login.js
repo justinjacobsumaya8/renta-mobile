@@ -13,10 +13,10 @@ import {
 import { login } from "../../redux/actions/authentication.action";
 import { showMessage } from "react-native-flash-message";
 import { Link, useRouter } from "expo-router";
+import Spinner from "react-native-loading-spinner-overlay";
 
 import { loginStyle as styles } from "../../styles";
 import { images } from "../../constants";
-import { BlockLoader } from "../../components";
 
 export default function Login() {
     const dispatch = useDispatch();
@@ -68,80 +68,69 @@ export default function Login() {
 
     return (
         <View style={styles.mainBody}>
-            <ScrollView
-                keyboardShouldPersistTaps="handled"
-                // contentContainerStyle={{
-                //     flex: 1,
-                //     justifyContent: "center",
-                //     alignContent: "center",
-                // }}
-            >
-                <BlockLoader loading={isLoggingIn}>
-                    <View style={{ marginTop: 30, marginBottom: 30 }}>
-                        <KeyboardAvoidingView enabled>
-                            <View style={{ alignItems: "center" }}>
-                                <Image
-                                    source={images.logo}
-                                    style={styles.logo}
+            <ScrollView keyboardShouldPersistTaps="handled">
+                <Spinner visible={isLoggingIn} />
+                <View style={{ marginTop: 30, marginBottom: 30 }}>
+                    <KeyboardAvoidingView enabled>
+                        <View style={{ alignItems: "center" }}>
+                            <Image source={images.logo} style={styles.logo} />
+                            <Text style={styles.welcomeText}>Welcome</Text>
+                            <Text style={styles.continueText}>
+                                Login to continue
+                            </Text>
+                        </View>
+                        <View style={styles.container}>
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    style={styles.inputStyle}
+                                    onChangeText={onChangeTextEmail}
+                                    placeholder="Enter Email"
+                                    placeholderTextColor="#8b9cb5"
+                                    autoCapitalize="none"
+                                    keyboardType="email-address"
+                                    returnKeyType="next"
+                                    onSubmitEditing={() =>
+                                        passwordInputRef.current &&
+                                        passwordInputRef.current.focus()
+                                    }
+                                    underlineColorAndroid="#f000"
+                                    blurOnSubmit={false}
                                 />
-                                <Text style={styles.welcomeText}>Welcome</Text>
-                                <Text style={styles.continueText}>
-                                    Login to continue
-                                </Text>
                             </View>
-                            <View style={styles.container}>
-                                <View style={styles.inputContainer}>
-                                    <TextInput
-                                        style={styles.inputStyle}
-                                        onChangeText={onChangeTextEmail}
-                                        placeholder="Enter Email"
-                                        placeholderTextColor="#8b9cb5"
-                                        autoCapitalize="none"
-                                        keyboardType="email-address"
-                                        returnKeyType="next"
-                                        onSubmitEditing={() =>
-                                            passwordInputRef.current &&
-                                            passwordInputRef.current.focus()
-                                        }
-                                        underlineColorAndroid="#f000"
-                                        blurOnSubmit={false}
-                                    />
-                                </View>
-                                <View style={styles.inputContainer}>
-                                    <TextInput
-                                        style={styles.inputStyle}
-                                        onChangeText={onChangeTextPassword}
-                                        placeholder="Enter Password"
-                                        placeholderTextColor="#8b9cb5"
-                                        keyboardType="default"
-                                        ref={passwordInputRef}
-                                        onSubmitEditing={Keyboard.dismiss}
-                                        blurOnSubmit={false}
-                                        secureTextEntry={true}
-                                        underlineColorAndroid="#f000"
-                                        returnKeyType="next"
-                                    />
-                                </View>
-                                <View style={styles.forgotPasswordContainer}>
-                                    <Link href="/forgot-password">
-                                        <Text style={styles.forgotPasswordText}>
-                                            Forgot Password?
-                                        </Text>
-                                    </Link>
-                                </View>
-                                <TouchableOpacity
-                                    style={styles.buttonStyle}
-                                    activeOpacity={0.5}
-                                    onPress={onPressSubmit}
-                                >
-                                    <Text style={styles.buttonTextStyle}>
-                                        Login
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    style={styles.inputStyle}
+                                    onChangeText={onChangeTextPassword}
+                                    placeholder="Enter Password"
+                                    placeholderTextColor="#8b9cb5"
+                                    keyboardType="default"
+                                    ref={passwordInputRef}
+                                    onSubmitEditing={Keyboard.dismiss}
+                                    blurOnSubmit={false}
+                                    secureTextEntry={true}
+                                    underlineColorAndroid="#f000"
+                                    returnKeyType="next"
+                                />
+                            </View>
+                            <View style={styles.forgotPasswordContainer}>
+                                <Link href="/forgot-password">
+                                    <Text style={styles.forgotPasswordText}>
+                                        Forgot Password?
                                     </Text>
-                                </TouchableOpacity>
+                                </Link>
                             </View>
-                        </KeyboardAvoidingView>
-                    </View>
-                </BlockLoader>
+                            <TouchableOpacity
+                                style={styles.buttonStyle}
+                                activeOpacity={0.5}
+                                onPress={onPressSubmit}
+                            >
+                                <Text style={styles.buttonTextStyle}>
+                                    Login
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </KeyboardAvoidingView>
+                </View>
             </ScrollView>
         </View>
     );

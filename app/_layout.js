@@ -3,7 +3,6 @@ import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { Provider as ReduxProvider } from "react-redux";
-import { Provider as AuthProvider } from "../services/AuthService";
 import FlashMessage from "react-native-flash-message";
 
 import store from "../redux/store";
@@ -25,23 +24,27 @@ const RootLayout = () => {
 
     return (
         <ReduxProvider store={store}>
-            <AuthProvider>
-                <Stack onLayout={onLayoutRootView}>
-                    <Stack.Screen
-                        name="(auth)"
-                        options={{
-                            headerShown: false,
-                        }}
-                    />
-                    <Stack.Screen
-                        name="(tabs)"
-                        options={{
-                            headerShown: false,
-                        }}
-                    />
-                </Stack>
-                <FlashMessage position="top" />
-            </AuthProvider>
+            <Stack onLayout={onLayoutRootView}>
+                <Stack.Screen
+                    name="(auth)"
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="(tabs)"
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="loading"
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+            </Stack>
+            <FlashMessage position="top" />
         </ReduxProvider>
     );
 };

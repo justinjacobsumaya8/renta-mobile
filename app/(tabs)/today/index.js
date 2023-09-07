@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
+import * as SecureStore from "expo-secure-store";
+import APP from "../../../config/app";
 import {
     View,
     Text,
@@ -13,7 +15,7 @@ import { getAuthenticatedUser } from "../../../redux/actions/authentication.acti
 
 import { todayTabStyle as styles } from "../../../styles";
 import { COLORS, SIZES } from "../../../constants";
-import { BlockLoader, MobileCheckIcon } from "../../../components";
+import { MobileCheckIcon } from "../../../components";
 
 const RESERVATION_STATUSES = [
     "Checking Out",
@@ -35,7 +37,17 @@ export default function Today() {
     );
 
     useEffect(() => {
-        dispatch(getAuthenticatedUser());
+        async function getAuthUser() {
+            try {
+                await dispatch(getAuthenticatedUser());
+            } catch (error) {
+                SecureStore.deleteItemAsync(APP.ACCESS_TOKEN_KEY).then(() => {
+                    router.push("/login");
+                });
+            }
+        }
+
+        getAuthUser();
     }, []);
 
     const onPressReservationStatus = (item) => {
@@ -51,11 +63,9 @@ export default function Today() {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
                     <View style={{ width: "100%" }}>
-                        <BlockLoader loading={isUserLoading}>
-                            <Text style={styles.welcomeText}>
-                                Welcome, {authenticatedUser.name}!
-                            </Text>
-                        </BlockLoader>
+                        <Text style={styles.welcomeText}>
+                            Welcome, {authenticatedUser.name}!
+                        </Text>
                         <Text style={styles.yourReservationsText}>
                             Your reservations
                         </Text>

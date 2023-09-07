@@ -1,5 +1,5 @@
 import ScreenHeaderBtn from "./common/ScreenHeaderBtn";
-import BlockLoader from "./common/BlockLoader";
+import ItemLoader from "./common/ItemLoader";
 
 import BarChartIcon from "./icons/BarChartIcon";
 import CalendarIcon from "./icons/CalendarIcon";
@@ -9,7 +9,7 @@ import MobileCheckIcon from "./icons/MobileCheckIcon";
 
 export {
     ScreenHeaderBtn,
-    BlockLoader,
+    ItemLoader,
     BarChartIcon,
     CalendarIcon,
     CalendarCheckIcon,
