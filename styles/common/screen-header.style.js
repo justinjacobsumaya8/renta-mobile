@@ -4,18 +4,21 @@ import { COLORS, SIZES } from "../../constants";
 
 const styles = StyleSheet.create({
     btnContainer: {
-        width: 40,
-        height: 40,
-        backgroundColor: COLORS.white,
-        borderRadius: SIZES.small / 1.25,
-        justifyContent: "center",
         alignItems: "center",
+        justifyContent: "center",
+        width: 35,
+        height: 35,
+        backgroundColor: "#fff",
+        borderRadius: 50,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 5,
     },
-    btnImg: (dimension) => ({
-        width: dimension,
-        height: dimension,
-        borderRadius: SIZES.small / 1.25,
-    }),
 });
 
 export default styles;

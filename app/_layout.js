@@ -26,6 +26,12 @@ const RootLayout = () => {
         <ReduxProvider store={store}>
             <Stack onLayout={onLayoutRootView}>
                 <Stack.Screen
+                    name="loading"
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
                     name="(auth)"
                     options={{
                         headerShown: false,
@@ -37,12 +43,7 @@ const RootLayout = () => {
                         headerShown: false,
                     }}
                 />
-                <Stack.Screen
-                    name="loading"
-                    options={{
-                        headerShown: false,
-                    }}
-                />
+                <Stack.Screen name="all-reservations" />
             </Stack>
             <FlashMessage position="top" />
         </ReduxProvider>

@@ -1,46 +1,49 @@
 import { StyleSheet } from "react-native";
-
-import { COLORS, FONT, SIZES } from "../../constants";
+import { COLORS, FONT, SIZES } from "../constants";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.white,
     },
-    viewContainer: {
+    headerBtnRightContainer: {
         flex: 1,
-        padding: SIZES.medium,
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        gap: 10,
     },
-    welcomeText: {
-        fontFamily: FONT.medium,
-        fontSize: SIZES.xxLarge,
+    viewContainer: {
+        paddingTop: SIZES.small,
+        paddingLeft: SIZES.medium,
+        paddingRight: SIZES.medium,
+        paddingBottom: SIZES.small,
     },
-    yourReservationsText: {
-        marginTop: 20,
+    reservationsText: {
         fontFamily: FONT.medium,
         fontSize: SIZES.large,
     },
     tabsContainer: {
         width: "100%",
         marginTop: SIZES.medium,
+        borderBottomWidth: 0.2,
+        borderBottomColor: COLORS.gray,
     },
     tab: (activeJobType, item) => ({
-        paddingVertical: SIZES.small / 2,
+        paddingVertical: SIZES.xSmall,
         paddingHorizontal: SIZES.small,
-        borderRadius: SIZES.medium,
-        borderWidth: 1,
+        borderBottomWidth: activeJobType === item ? 2 : 0,
         borderColor: activeJobType === item ? COLORS.secondary : COLORS.gray2,
     }),
     tabText: (activeJobType, item) => ({
         fontFamily: FONT.medium,
-        color: activeJobType === item ? COLORS.secondary : COLORS.gray2,
+        fontSize: 12,
+        color: activeJobType === item ? COLORS.secondary : COLORS.gray,
     }),
     tabResultContainer: {
         textAlign: "center",
         alignItems: "center",
         marginTop: SIZES.xLarge,
         padding: 50,
-        backgroundColor: COLORS.lightGray,
         borderRadius: SIZES.medium,
     },
     tabResultText: {
@@ -48,14 +51,6 @@ const styles = StyleSheet.create({
         marginTop: 12,
         fontSize: SIZES.small,
         textAlign: "center",
-    },
-    allReservationsContainer: {
-        marginTop: 25,
-        width: "40%",
-    },
-    allReservationsText: {
-        textDecorationLine: "underline",
-        fontFamily: FONT.medium,
     },
 });
 

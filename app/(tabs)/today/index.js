@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 import APP from "../../../config/app";
+import Spinner from "react-native-loading-spinner-overlay";
 import {
     View,
     Text,
@@ -14,10 +15,10 @@ import {
 import { getAuthenticatedUser } from "../../../redux/actions/authentication.action";
 
 import { todayTabStyle as styles } from "../../../styles";
-import { COLORS, SIZES } from "../../../constants";
+import { SIZES } from "../../../constants";
 import { MobileCheckIcon } from "../../../components";
 
-const RESERVATION_STATUSES = [
+const RESERVATION_TABS = [
     "Checking Out",
     "Currently hosting",
     "Upcoming",
@@ -28,8 +29,8 @@ export default function Today() {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const [activeReservationStatus, setActiveReservationStatus] = useState(
-        RESERVATION_STATUSES[0]
+    const [activeReservationTab, setActiveReservationTab] = useState(
+        RESERVATION_TABS[0]
     );
 
     const { isUserLoading, authenticatedUser } = useSelector(
@@ -46,12 +47,11 @@ export default function Today() {
                 });
             }
         }
-
         getAuthUser();
     }, []);
 
-    const onPressReservationStatus = (item) => {
-        setActiveReservationStatus(item);
+    const onPressReservationTab = (item) => {
+        setActiveReservationTab(item);
     };
 
     const onPressAllReservations = () => {
@@ -59,9 +59,10 @@ export default function Today() {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
+        <SafeAreaView style={styles.container}>
+            <Spinner visible={isUserLoading} />
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.container}>
+                <View style={styles.viewContainer}>
                     <View style={{ width: "100%" }}>
                         <Text style={styles.welcomeText}>
                             Welcome, {authenticatedUser.name}!
@@ -71,20 +72,21 @@ export default function Today() {
                         </Text>
                         <View style={styles.tabsContainer}>
                             <FlatList
-                                data={RESERVATION_STATUSES}
+                                showsHorizontalScrollIndicator={false}
+                                data={RESERVATION_TABS}
                                 renderItem={({ item }) => (
                                     <TouchableOpacity
                                         style={styles.tab(
-                                            activeReservationStatus,
+                                            activeReservationTab,
                                             item
                                         )}
                                         onPress={() =>
-                                            onPressReservationStatus(item)
+                                            onPressReservationTab(item)
                                         }
                                     >
                                         <Text
                                             style={styles.tabText(
-                                                activeReservationStatus,
+                                                activeReservationTab,
                                                 item
                                             )}
                                         >
